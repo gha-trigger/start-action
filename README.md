@@ -1,11 +1,11 @@
-# gha-trigger-start-action
+# start-action
 
-GitHub Actions for gha-trigger
+GitHub Actions for [gha-trigger](https://gha-trigger.github.io)
 
 ## What does this action do?
 
-- Show GitHub Actions Step Summary by [gha-trigger-step-summary-action](https://github.com/suzuki-shunsuke/gha-trigger-step-summary-action)
-- Set Environment Variables by [gha-trigger-set-env-action](https://github.com/suzuki-shunsuke/gha-trigger-set-env-action)
+- Show GitHub Actions Step Summary by [gha-trigger/step-summary-action](https://github.com/gha-trigger/step-summary-action)
+- Set Environment Variables by [gha-trigger/set-env-action](https://github.com/gha-trigger/set-env-action)
 - Generate GitHub App Token by [tibdex/github-app-token](https://github.com/tibdex/github-app-token)
 - Set the commit status to `pending`
 - Checkout Main Repository and CI Repository by [actions/checkout](https://github.com/actions/checkout)
@@ -22,7 +22,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: suzuki-shunsuke/gha-trigger-start-action@main
+      - uses: gha-trigger/start-action@main
         with:
           data: ${{inputs.data}}
           app_id: ${{secrets.APP_ID}}
@@ -54,7 +54,7 @@ jobs:
 
 ## Environment Variables
 
-Environment Variables are set by [gha-trigger-set-env-action](https://github.com/suzuki-shunsuke/gha-trigger-set-env-action).
+Environment Variables are set by [gha-trigger/set-env-action](https://github.com/gha-trigger/set-env-action).
 
 ## LICENSE
 
