@@ -1,0 +1,90 @@
+name: Start GitHub Actions job with gha-trigger
+description: Start GitHub Actions job with gha-trigger
+inputs:
+  data:
+    description: gha-trigger's workflow dispatch input
+    required: true
+
+  app_id:
+    description: GitHub App ID
+    required: true
+  app_private_key:
+    description: GitHub App Private Key
+    required: true
+
+  main_repo_checkout_fetch_depth:
+    description: Main Repository's checkout fetch depth
+    default: 1
+    required: false
+  main_repo_checkout_lfs:
+    description: Main Repository's checkout lfs
+    default: false
+    required: false
+  main_repo_checkout_submodules:
+    description: Main Repository's checkout submodules
+    default: false
+    required: false
+
+  ci_repo_checkout_path:
+    description: CI Repository's checkout path
+    default: .ci
+    required: false
+  ci_repo_checkout_ref:
+    description: CI Repository's checkout ref
+    default: ""
+    required: false
+  ci_repo_checkout_fetch_depth:
+    description: CI Repository's checkout fetch depth
+    default: 1
+    required: false
+  ci_repo_checkout_lfs:
+    description: CI Repository's checkout lfs
+    default: false
+    required: false
+  ci_repo_checkout_submodules:
+    description: CI Repository's checkout submodules
+    default: false
+    required: false
+outputs:
+  github_app_token:
+    description: GitHub App's Access Token
+    value: ${{steps.generate_token.outputs.token}}
+runs:
+  using: composite
+  steps:
+    - uses: suzuki-shunsuke/gha-trigger-step-summary-action@main
+      with:
+        data: ${{inputs.data}}
+    - uses: suzuki-shunsuke/gha-trigger-set-env-action@main
+      with:
+        data: ${{inputs.data}}
+
+    - name: Generate token
+      id: generate_token
+      uses: tibdex/github-app-token@v1
+      with:
+        app_id: ${{inputs.app_id}}
+        private_key: ${{inputs.app_private_key}}
+
+    - uses: suzuki-shunsuke/update-commit-status-action@main
+      with:
+        repo_owner: ${{env.GHA_REPOSITORY_OWNER}}
+        repo_name: ${{env.MAIN_REPO_NAME}}
+        sha: ${{env.GHA_HEAD_SHA}}
+        github_token: ${{steps.generate_token.outputs.token}}
+
+    - uses: actions/checkout@v3
+      with:
+        repository: ${{env.GHA_REPOSITORY}}
+        ref: ${{env.GHA_REF}}
+        token: ${{steps.generate_token.outputs.token}}
+        fetch-depth: ${{inputs.main_repo_checkout_fetch_depth}}
+        lfs: ${{inputs.main_repo_checkout_lfs}}
+        submodules: ${{inputs.main_repo_checkout_submodules}}
+    - uses: actions/checkout@v3
+      with:
+        path: ${{inputs.ci_repo_checkout_path}}
+        ref: ${{inputs.ci_repo_checkout_ref}}
+        fetch-depth: ${{inputs.ci_repo_checkout_fetch_depth}}
+        lfs: ${{inputs.ci_repo_checkout_lfs}}
+        submodules: ${{inputs.ci_repo_checkout_submodules}}
