@@ -70,7 +70,7 @@ runs:
       with:
         repo_owner: ${{env.GHA_REPOSITORY_OWNER}}
         repo_name: ${{env.MAIN_REPO_NAME}}
-        sha: ${{env.GHA_HEAD_SHA}}
+        sha: ${{env.GHA_COMMIT_STATUS_SHA}}
         github_token: ${{steps.generate_token.outputs.token}}
 
     - uses: actions/checkout@v3
