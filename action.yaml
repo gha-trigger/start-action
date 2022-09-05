@@ -67,6 +67,7 @@ runs:
         private_key: ${{inputs.app_private_key}}
 
     - uses: suzuki-shunsuke/update-commit-status-action@main
+      if: env.GHA_COMMIT_STATUS_SHA
       with:
         repo_owner: ${{env.GHA_REPOSITORY_OWNER}}
         repo_name: ${{env.MAIN_REPO_NAME}}
