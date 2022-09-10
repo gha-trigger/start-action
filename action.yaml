@@ -56,9 +56,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: gha-trigger/step-summary-action@v0.1.0
-      with:
-        data: ${{inputs.data}}
     - uses: gha-trigger/set-env-action@v0.1.0
       with:
         data: ${{inputs.data}}

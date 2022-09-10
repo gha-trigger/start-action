@@ -4,7 +4,6 @@ GitHub Actions for [gha-trigger](https://gha-trigger.github.io)
 
 ## What does this action do?
 
-- Show GitHub Actions Step Summary by [gha-trigger/step-summary-action](https://github.com/gha-trigger/step-summary-action)
 - Set Environment Variables by [gha-trigger/set-env-action](https://github.com/gha-trigger/set-env-action)
 - Generate GitHub App Token by [tibdex/github-app-token](https://github.com/tibdex/github-app-token)
 - Set the commit status to `pending`
