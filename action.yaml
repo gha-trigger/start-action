@@ -56,10 +56,10 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: gha-trigger/step-summary-action@main
+    - uses: gha-trigger/step-summary-action@v0.1.0
       with:
         data: ${{inputs.data}}
-    - uses: gha-trigger/set-env-action@main
+    - uses: gha-trigger/set-env-action@v0.1.0
       with:
         data: ${{inputs.data}}
 
@@ -70,7 +70,7 @@ runs:
         app_id: ${{inputs.app_id}}
         private_key: ${{inputs.app_private_key}}
 
-    - uses: suzuki-shunsuke/update-commit-status-action@main
+    - uses: suzuki-shunsuke/update-commit-status-action@v0.1.0
       if: env.GHA_COMMIT_STATUS_SHA
       with:
         repo_owner: ${{env.GHA_REPOSITORY_OWNER}}
