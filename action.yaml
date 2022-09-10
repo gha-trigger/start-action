@@ -25,6 +25,10 @@ inputs:
     default: false
     required: false
 
+  enable_ci_repo_checkout:
+    description: If true, CI Repository is checked out
+    default: true
+    required: false
   ci_repo_checkout_path:
     description: CI Repository's checkout path
     default: .ci
@@ -83,6 +87,7 @@ runs:
         lfs: ${{inputs.main_repo_checkout_lfs}}
         submodules: ${{inputs.main_repo_checkout_submodules}}
     - uses: actions/checkout@v3
+      if: inputs.enable_ci_repo_checkout
       with:
         path: ${{inputs.ci_repo_checkout_path}}
         ref: ${{inputs.ci_repo_checkout_ref}}
