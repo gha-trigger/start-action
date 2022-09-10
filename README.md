@@ -42,6 +42,7 @@ jobs:
 - `main_repo_checkout_fetch_depth`
 - `main_repo_checkout_lfs`
 - `main_repo_checkout_submodules`
+- `enable_ci_repo_checkout`
 - `ci_repo_checkout_path`
 - `ci_repo_checkout_ref`
 - `ci_repo_checkout_fetch_depth`
