@@ -65,6 +65,8 @@ To do so, please do the following things.
 
 - Set the environment variable `GHA_WORKFLOW_COMMIT_STATUS` to `true` in workflow scope
 - Set the parameter `update_commit_status` to `true` at only one `start-action`
+- Remove `end-action` from all jobs except for the last job
+- Add a job to update a commit status at the end of workflow
 
 e.g.
 
@@ -90,6 +92,22 @@ jobs:
           # Don't set the parameter `update_commit_status`
           # commit status isn't changed
       # ...
+  status-check:
+    runs-on: ubuntu-latest
+    needs: [foo, bar] # Run this job lastly
+    if: always()
+    steps:
+      - uses: gha-trigger/start-action@main
+        id: start
+        with:
+          # ...
+          # Don't set the parameter `update_commit_status`
+          # commit status isn't changed
+      - uses: gha-trigger/end-action@main
+        if: always()
+        with:
+          github_token: ${{steps.start.outputs.github_app_token}}
+          state: ${{job.status}}
 ```
 
 

@@ -70,25 +70,10 @@ runs:
         app_id: ${{inputs.app_id}}
         private_key: ${{inputs.app_private_key}}
 
-    - run: |
-        if [ "${GHA_WORKFLOW_COMMIT_STATUS:-}" != true ]; then
-          echo "::set-output name=context::${{ github.workflow }} / ${{ github.job }} (${{ github.event_name }})"
-          exit 0
-        fi
-        if [ "true" = "${{toJSON(inputs.update_commit_status)}}" ]; then
-          echo "::set-output name=context::${{ github.workflow }} (${{ github.event_name }})"
-          exit 0
-        fi
-      shell: bash
-
-    - uses: suzuki-shunsuke/update-commit-status-action@v0.1.0
-      if: "env.GHA_COMMIT_STATUS_SHA && steps.commit_status.outputs.context"
+    - uses: gha-trigger/commit-status-action@feat/support-workflow
       with:
-        repo_owner: ${{env.GHA_REPOSITORY_OWNER}}
-        repo_name: ${{env.GHA_REPOSITORY_NAME}}
-        sha: ${{env.GHA_COMMIT_STATUS_SHA}}
-        context: ${{steps.commit_status.outputs.context}}
         github_token: ${{steps.generate_token.outputs.token}}
+        update_commit_status: ${{inputs.update_commit_status}}
 
     - uses: actions/checkout@v3
       with:
