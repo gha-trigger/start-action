@@ -49,6 +49,10 @@ inputs:
     description: CI Repository's checkout submodules
     default: false
     required: false
+  start_workflow:
+    description: Update a commit status
+    required: false
+    default: false
 outputs:
   github_app_token:
     description: GitHub App's Access Token
@@ -67,13 +71,10 @@ runs:
         app_id: ${{inputs.app_id}}
         private_key: ${{inputs.app_private_key}}
 
-    - uses: suzuki-shunsuke/update-commit-status-action@v0.1.0
-      if: env.GHA_COMMIT_STATUS_SHA
+    - uses: gha-trigger/commit-status-action@v0.1.0
       with:
-        repo_owner: ${{env.GHA_REPOSITORY_OWNER}}
-        repo_name: ${{env.GHA_REPOSITORY_NAME}}
-        sha: ${{env.GHA_COMMIT_STATUS_SHA}}
         github_token: ${{steps.generate_token.outputs.token}}
+        start_workflow: ${{inputs.start_workflow}}
 
     - uses: actions/checkout@v3
       with:

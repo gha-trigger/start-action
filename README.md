@@ -56,6 +56,61 @@ jobs:
 
 Environment Variables are set by [gha-trigger/set-env-action](https://github.com/gha-trigger/set-env-action).
 
+## Update a commit status per workflow
+
+start-action is run per job, so commit statuses are updated per job by default.
+To update commit statuses, start-action calls GitHub API so it may cause GitHub API rate limiting.
+If you'd like to decrease API call, you can update commit statuses per not job but workflow.
+To do so, please do the following things.
+
+- Set the environment variable `GHA_WORKFLOW_COMMIT_STATUS` to `true` in workflow scope
+- Set the parameter `start_workflow` to `true` at only one `start-action`
+- Remove `end-action` from all jobs except for the last job
+- Add a job to update a commit status at the end of workflow
+
+e.g.
+
+```yaml
+env:
+  GHA_WORKFLOW_COMMIT_STATUS: "true"
+jobs:
+  foo:
+    steps:
+      - uses: gha-trigger/start-action@main
+        id: start
+        with:
+          # ...
+          # commit status is changed to "pending"
+          update_commit_status: true # set this parameter at only this step
+      # ...
+  bar:
+    steps:
+      - uses: gha-trigger/start-action@main
+        id: start
+        with:
+          # ...
+          # Don't set the parameter `update_commit_status`
+          # commit status isn't changed
+      # ...
+  status-check:
+    runs-on: ubuntu-latest
+    needs: [foo, bar] # Run this job lastly
+    if: always()
+    steps:
+      - uses: gha-trigger/start-action@main
+        id: start
+        with:
+          # ...
+          # Don't set the parameter `update_commit_status`
+          # commit status isn't changed
+      - uses: gha-trigger/end-action@main
+        if: always()
+        with:
+          github_token: ${{steps.start.outputs.github_app_token}}
+          state: ${{job.status}}
+```
+
+
 ## LICENSE
 
 [MIT](LICENSE)
