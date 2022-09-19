@@ -64,7 +64,7 @@ If you'd like to decrease API call, you can update commit statuses per not job b
 To do so, please do the following things.
 
 - Set the environment variable `GHA_WORKFLOW_COMMIT_STATUS` to `true` in workflow scope
-- Set the parameter `update_commit_status` to `true` at only one `start-action`
+- Set the parameter `start_workflow` to `true` at only one `start-action`
 - Remove `end-action` from all jobs except for the last job
 - Add a job to update a commit status at the end of workflow
 

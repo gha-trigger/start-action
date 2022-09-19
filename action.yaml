@@ -49,7 +49,7 @@ inputs:
     description: CI Repository's checkout submodules
     default: false
     required: false
-  update_commit_status:
+  start_workflow:
     description: Update a commit status
     required: false
     default: false
@@ -74,7 +74,7 @@ runs:
     - uses: gha-trigger/commit-status-action@feat/support-workflow
       with:
         github_token: ${{steps.generate_token.outputs.token}}
-        update_commit_status: ${{inputs.update_commit_status}}
+        start_workflow: ${{inputs.start_workflow}}
 
     - uses: actions/checkout@v3
       with:
