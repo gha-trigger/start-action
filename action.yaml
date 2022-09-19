@@ -52,6 +52,7 @@ inputs:
   update_commit_status:
     description: Update a commit status
     required: false
+    default: false
 outputs:
   github_app_token:
     description: GitHub App's Access Token
