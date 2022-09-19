@@ -47,6 +47,7 @@ jobs:
 - `ci_repo_checkout_fetch_depth`
 - `ci_repo_checkout_lfs`
 - `ci_repo_checkout_submodules`
+- `start_workflow`
 
 ## Outputs
 
