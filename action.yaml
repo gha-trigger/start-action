@@ -71,7 +71,7 @@ runs:
         app_id: ${{inputs.app_id}}
         private_key: ${{inputs.app_private_key}}
 
-    - uses: gha-trigger/commit-status-action@feat/support-workflow
+    - uses: gha-trigger/commit-status-action@v0.1.0
       with:
         github_token: ${{steps.generate_token.outputs.token}}
         start_workflow: ${{inputs.start_workflow}}
