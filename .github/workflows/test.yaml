@@ -1,0 +1,20 @@
+name: test
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: normal
+        if: "false"
+        uses: ./
+        with:
+          app_id: xxx
+          app_private_key: xxx
+          data: "{}"
