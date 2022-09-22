@@ -1,6 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
+    "github>suzuki-shunsuke/renovate-config",
+    "github>aquaproj/aqua-renovate-config#1.2.5"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["digest"],
+      "enabled": false
+    }
   ]
 }
