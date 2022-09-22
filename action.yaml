@@ -60,7 +60,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: gha-trigger/set-env-action@v0.1.1
+    - uses: gha-trigger/set-env-action@v0.1.2
       with:
         data: ${{inputs.data}}
 
@@ -71,7 +71,7 @@ runs:
         app_id: ${{inputs.app_id}}
         private_key: ${{inputs.app_private_key}}
 
-    - uses: gha-trigger/commit-status-action@v0.1.0
+    - uses: gha-trigger/commit-status-action@v0.1.1
       with:
         github_token: ${{steps.generate_token.outputs.token}}
         start_workflow: ${{inputs.start_workflow}}
