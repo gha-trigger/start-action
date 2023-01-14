@@ -60,23 +60,23 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: gha-trigger/set-env-action@v0.1.3
+    - uses: gha-trigger/set-env-action@94b9fe58e9342e2e723becba74769142a7cb281e # v0.1.3
       with:
         data: ${{inputs.data}}
 
     - name: Generate token
       id: generate_token
-      uses: tibdex/github-app-token@v1
+      uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c # v1
       with:
         app_id: ${{inputs.app_id}}
         private_key: ${{inputs.app_private_key}}
 
-    - uses: gha-trigger/commit-status-action@v0.1.1
+    - uses: gha-trigger/commit-status-action@23db2bd759383bae73461ccfac2d3508a26de9e1 # v0.1.1
       with:
         github_token: ${{steps.generate_token.outputs.token}}
         start_workflow: ${{inputs.start_workflow}}
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       with:
         repository: ${{env.GHA_REPOSITORY}}
         ref: ${{env.GHA_SHA}}
@@ -84,7 +84,7 @@ runs:
         fetch-depth: ${{inputs.main_repo_checkout_fetch_depth}}
         lfs: ${{inputs.main_repo_checkout_lfs}}
         submodules: ${{inputs.main_repo_checkout_submodules}}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       if: inputs.enable_ci_repo_checkout
       with:
         path: ${{inputs.ci_repo_checkout_path}}
